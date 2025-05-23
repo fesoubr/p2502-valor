@@ -111,9 +111,9 @@ def main():
         )
 
 
-    # --- Gráfico de Linhas Principal (com correção de sintaxe) ---
+    # --- Gráfico de Linhas Principal (com correção de sintaxe e eixo X) ---
     chart = alt.Chart(df_filtered).mark_line(point=True, strokeWidth=2.5).encode(
-        x=alt.X('Date:T', title='Data', axis=alt.Axis(format='%Y', labelAngle=0, tickCount='year', values=[f'{y}-01-01' for y in range(2009, 2025, 5)])),
+        x=alt.X('YearMonthDate:T', title='Data', axis=alt.Axis(format='%Y', labelAngle=0)), # <-- Modificação AQUI!
         y=alt.Y('Market_Value_EUR_M:Q', title='Valor de Mercado (€ Milhões)', axis=alt.Axis(format='~s')),
         color=alt.Color('Club:N', scale=club_colors_altair, legend=alt.Legend(title="Clube")),
         tooltip=[
@@ -125,7 +125,7 @@ def main():
         title='Evolução do Valor de Mercado de Neymar (em milhões de €)',
         height=400, # Altura do gráfico
         width='container' # Preenche a largura disponível no Streamlit
-    ).interactive().configure_title( 
+    ).interactive().configure_title(
         anchor='start', # Alinha o título à esquerda
         fontSize=20,
         offset=20
@@ -144,12 +144,13 @@ def main():
     st.altair_chart(chart, use_container_width=True)
 
     st.markdown("---")
+    st.header("Análise dos Valores")
+    st.markdown("""
+    * **Pico de Valor:** Observe quando o valor de mercado atingiu seu ápice e em qual período/clube isso ocorreu.
+    * **Tendências:** Analise as tendências de alta e baixa do valor de mercado ao longo dos anos e como elas se correlacionam com as mudanças de clube.
+    * **Impacto das Transferências:** Identifique se houve um impacto imediato no valor de mercado após grandes transferências (como para o PSG).
+    """)
 
-    st.header("Histórico do Valor de Mercado")
-    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar, acordo com o site especializado Transfermarkt")
-    st.dataframe(df_filtered.sort_values(by='Date').set_index('Date').style.format({"Market_Value_EUR_M": "€{:,.2f}M"}))
-    st.markdown("---")
-    
     st.info("""
     **Observação Importante:** Os dados de valor de mercado são **simulados** para fins de demonstração,
     baseados em observações visuais do gráfico do Transfermarkt. Para um projeto real,
