@@ -117,7 +117,7 @@ def main():
     ax.set_xlabel('Ano')
     ax.set_ylabel('Valor de Mercado (€ Milhões)')
     ax.legend(title='Clube')
-    ax.grid(False)
+    ax.grid(True)
 
     fig.tight_layout() 
 
