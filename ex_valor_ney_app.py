@@ -81,14 +81,9 @@ def main():
     df_filtered = df_market_value[df_market_value['Club'].isin(selected_clubs)]
 
 
-    st.header("Histórico do Valor de Mercado")
-    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar.")
-    st.dataframe(df_filtered.sort_values(by='Date').set_index('Date').style.format({"Market_Value_EUR_M": "€{:,.2f}M"}))
-    st.markdown("---")
-
     st.header("Gráfico Interativo: Evolução do Valor de Mercado")
 
-    # Tema escuro para Altair (atualizado para a nova sintaxe de altair >= 5.5.0)
+    # Tema escuro para Altair 
     @alt.theme.register("dark_theme", enable=True)
     def dark_theme():
         return alt.theme.ThemeConfig(
@@ -116,9 +111,9 @@ def main():
         )
 
 
-    # --- Gráfico de Linhas Principal (com correção de sintaxe e eixo X/Y) ---
+    # --- Gráfico de Linhas Principal  ---
     chart = alt.Chart(df_filtered).mark_line(point=True, strokeWidth=2.5).encode(
-        x=alt.X('Date:T', # <-- Volta para Date:T
+        x=alt.X('Date:T', # <-- Date:T
                 title='Data',
                 axis=alt.Axis(format='%Y', labelAngle=0, tickCount='year', # <-- Adiciona tickCount='year'
                               labelOverlap="greedy")), # <-- Adiciona labelOverlap para garantir exibição
@@ -154,13 +149,12 @@ def main():
     st.altair_chart(chart, use_container_width=True)
 
     st.markdown("---")
-    st.header("Análise dos Valores")
-    st.markdown("""
-    * **Pico de Valor:** Observe quando o valor de mercado atingiu seu ápice e em qual período/clube isso ocorreu.
-    * **Tendências:** Analise as tendências de alta e baixa do valor de mercado ao longo dos anos e como elas se correlacionam com as mudanças de clube.
-    * **Impacto das Transferências:** Identifique se houve um impacto imediato no valor de mercado após grandes transferências (como para o PSG).
-    """)
 
+    st.header("Histórico do Valor de Mercado")
+    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar, conforme o site especializado Transfermarkt.")
+    st.dataframe(df_filtered.sort_values(by='Date').set_index('Date').style.format({"Market_Value_EUR_M": "€{:,.2f}M"}))
+    st.markdown("---")
+  
     st.info("""
     **Observação Importante:** Os dados de valor de mercado são **simulados** para fins de demonstração,
     baseados em observações visuais do gráfico do Transfermarkt. Para um projeto real,
