@@ -149,35 +149,8 @@ def main():
             }
         }
 
-
-    # Definindo um tema personalizado para Altair (similar ao tema escuro do Matplotlib)
-    @alt.theme.register("dark_theme", enable=True) # <-- Nova forma de registrar e habilitar
-    def dark_theme():
-      return alt.theme.ThemeConfig( # <-- Retorna ThemeConfig
-        {
-            "background": "#1C1C1C", # Cor de fundo da figura
-            "title": {
-                "color": "white"
-            },
-            "axis": {
-                "gridColor": "#4A4A4A", # Cor da grade
-                "labelColor": "white",
-                "titleColor": "white"
-            },
-            "header": {
-                "labelColor": "white",
-                "titleColor": "white"
-            },
-            "legend": {
-                "labelColor": "white",
-                "titleColor": "white",
-                "fillColor": "#1C1C1C", # Cor de fundo da legenda
-                "strokeColor": "#1C1C1C" # Cor da borda da legenda
-            }
-        }
-    )
-
-
+    alt.themes.register("dark_theme", dark_theme)
+    alt.themes.enable("dark_theme")
 
 
     # --- Gráfico de Linhas Principal ---
@@ -228,7 +201,7 @@ def main():
     st.altair_chart(chart, use_container_width=True)
 
     st.markdown("---")
-
+    
     st.info("""
     **Observação Importante:** Os dados de valor de mercado são **simulados** para fins de demonstração,
     baseados em observações visuais do gráfico do Transfermarkt. Para um projeto real,
