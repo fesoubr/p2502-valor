@@ -116,14 +116,19 @@ def main():
         )
 
 
-    # --- Gráfico de Linhas Principal (com correção de sintaxe e eixo X) ---
+    # --- Gráfico de Linhas Principal (com correção de sintaxe e eixo X/Y) ---
     chart = alt.Chart(df_filtered).mark_line(point=True, strokeWidth=2.5).encode(
-        x=alt.X('YearMonthDate:T', title='Data', axis=alt.Axis(format='%Y', labelAngle=0)), # <-- Modificação AQUI!
-        y=alt.Y('Market_Value_EUR_M:Q', title='Valor de Mercado (€ Milhões)', axis=alt.Axis(format='~s')),
+        x=alt.X('Date:T', # <-- Volta para Date:T
+                title='Data',
+                axis=alt.Axis(format='%Y', labelAngle=0, tickCount='year', # <-- Adiciona tickCount='year'
+                              labelOverlap="greedy")), # <-- Adiciona labelOverlap para garantir exibição
+        y=alt.Y('Market_Value_EUR_M:Q',
+                title='Valor de Mercado (€ Milhões)',
+                axis=alt.Axis(format=',.0f')), # <-- Formato simples para números inteiros
         color=alt.Color('Club:N', scale=club_colors_altair, legend=alt.Legend(title="Clube")),
         tooltip=[
             alt.Tooltip('Date:T', title='Data', format='%Y-%m-%d'),
-            alt.Tooltip('Market_Value_EUR_M:Q', title='Valor (€ Milhões)', format='~s'),
+            alt.Tooltip('Market_Value_EUR_M:Q', title='Valor (€ Milhões)', format=',.2f'), # <-- Mantém format='~s' para tooltip para melhor legibilidade
             alt.Tooltip('Club:N', title='Clube')
         ]
     ).properties(
