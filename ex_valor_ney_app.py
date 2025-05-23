@@ -81,11 +81,6 @@ def main():
     df_filtered = df_market_value[df_market_value['Club'].isin(selected_clubs)]
 
 
-    st.header("Histórico do Valor de Mercado")
-    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar, acordo com o site especializado Transfermarkt")
-    st.dataframe(df_filtered.sort_values(by='Date').set_index('Date').style.format({"Market_Value_EUR_M": "€{:,.2f}M"}))
-    st.markdown("---")
-
     st.header("Gráfico Interativo: Evolução do Valor de Mercado")
 
     # Tema escuro para Altair (atualizado para a nova sintaxe de altair >= 5.5.0)
@@ -148,6 +143,11 @@ def main():
 
     st.altair_chart(chart, use_container_width=True)
 
+    st.markdown("---")
+
+    st.header("Histórico do Valor de Mercado")
+    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar, acordo com o site especializado Transfermarkt")
+    st.dataframe(df_filtered.sort_values(by='Date').set_index('Date').style.format({"Market_Value_EUR_M": "€{:,.2f}M"}))
     st.markdown("---")
     
     st.info("""
