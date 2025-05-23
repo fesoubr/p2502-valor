@@ -21,25 +21,25 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-#Dados Históricos de Valor de Mercado (Simulados/Manual)
+# --- Dados Históricos de Valor de Valor de Mercado (Simulados/Manual) ---
 neymar_market_value_data = [
-    # Santos (2009-2013)
-    {"Date": "2009-07-23", "Market_Value_EUR_M": 1.0, "Club": "Santos"},
-    {"Date": "2010-06-10", "Market_Value_EUR_M": 15.0, "Club": "Santos"},
-    {"Date": "2011-06-29", "Market_Value_EUR_M": 30.0, "Club": "Santos"},
-    {"Date": "2012-08-01", "Market_Value_EUR_M": 50.0, "Club": "Santos"},
-    {"Date": "2013-03-20", "Market_Value_EUR_M": 50.0, "Club": "Santos"},
-    # Barcelona (2013-2017) - Início no clube em 01/07/2013
+    # Santos (2009-2013) - 1ª Passagem
+    {"Date": "2009-07-23", "Market_Value_EUR_M": 1.0, "Club": "Santos - 1ª Passagem"},
+    {"Date": "2010-06-10", "Market_Value_EUR_M": 15.0, "Club": "Santos - 1ª Passagem"},
+    {"Date": "2011-06-29", "Market_Value_EUR_M": 30.0, "Club": "Santos - 1ª Passagem"},
+    {"Date": "2012-08-01", "Market_Value_EUR_M": 50.0, "Club": "Santos - 1ª Passagem"},
+    {"Date": "2013-03-20", "Market_Value_EUR_M": 50.0, "Club": "Santos - 1ª Passagem"},
+    # Barcelona (2013-2017)
     {"Date": "2013-09-02", "Market_Value_EUR_M": 50.0, "Club": "Barcelona"},
     {"Date": "2014-06-10", "Market_Value_EUR_M": 70.0, "Club": "Barcelona"},
     {"Date": "2015-02-09", "Market_Value_EUR_M": 80.0, "Club": "Barcelona"},
     {"Date": "2015-07-01", "Market_Value_EUR_M": 100.0, "Club": "Barcelona"},
     {"Date": "2016-03-17", "Market_Value_EUR_M": 100.0, "Club": "Barcelona"},
     {"Date": "2017-01-20", "Market_Value_EUR_M": 100.0, "Club": "Barcelona"},
-    {"Date": "2017-06-26", "Market_Value_EUR_M": 100.0, "Club": "Barcelona"}, # Último valor no Barça
-    # Paris SG (2017-2023) - Início no clube em 03/08/2017
+    {"Date": "2017-06-26", "Market_Value_EUR_M": 100.0, "Club": "Barcelona"},
+    # Paris SG (2017-2023)
     {"Date": "2017-08-03", "Market_Value_EUR_M": 150.0, "Club": "Paris SG"},
-    {"Date": "2018-01-24", "Market_Value_EUR_M": 180.0, "Club": "Paris SG"}, # Pico de valor
+    {"Date": "2018-01-24", "Market_Value_EUR_M": 180.0, "Club": "Paris SG"},
     {"Date": "2018-05-29", "Market_Value_EUR_M": 180.0, "Club": "Paris SG"},
     {"Date": "2018-12-17", "Market_Value_EUR_M": 180.0, "Club": "Paris SG"},
     {"Date": "2019-06-12", "Market_Value_EUR_M": 180.0, "Club": "Paris SG"},
@@ -50,14 +50,15 @@ neymar_market_value_data = [
     {"Date": "2022-03-24", "Market_Value_EUR_M": 90.0, "Club": "Paris SG"},
     {"Date": "2022-11-07", "Market_Value_EUR_M": 75.0, "Club": "Paris SG"},
     {"Date": "2023-03-27", "Market_Value_EUR_M": 70.0, "Club": "Paris SG"},
-    {"Date": "2023-06-20", "Market_Value_EUR_M": 60.0, "Club": "Paris SG"}, # Último valor no PSG
-    # Al-Hilal (2023-2024) - Início no clube em 15/08/2023
+    {"Date": "2023-06-20", "Market_Value_EUR_M": 60.0, "Club": "Paris SG"},
+    # Al-Hilal (2023-presente)
     {"Date": "2023-08-15", "Market_Value_EUR_M": 60.0, "Club": "Al-Hilal"},
     {"Date": "2023-12-14", "Market_Value_EUR_M": 45.0, "Club": "Al-Hilal"},
     {"Date": "2024-03-25", "Market_Value_EUR_M": 30.0, "Club": "Al-Hilal"},
     {"Date": "2024-06-15", "Market_Value_EUR_M": 25.0, "Club": "Al-Hilal"},
     {"Date": "2024-09-20", "Market_Value_EUR_M": 20.0, "Club": "Al-Hilal"},
-    {"Date": "2024-12-13", "Market_Value_EUR_M": 15.0, "Club": "Santos"} # Retorno ao Santos, valor atual.
+    # Santos (Retorno) - 2ª Passagem
+    {"Date": "2024-12-13", "Market_Value_EUR_M": 15.0, "Club": "Santos - 2ª Passagem"}
 ]
 
 df_market_value = pd.DataFrame(neymar_market_value_data)
@@ -65,12 +66,12 @@ df_market_value['Date'] = pd.to_datetime(df_market_value['Date']) # Converte a c
 
 # Define as datas de início e fim em cada clube (para usar como anotações no gráfico)
 club_periods = {
-    "Santos": {"start": "2009-01-01", "end": "2013-06-30", "color": "green"},
+    "Santos - 1ª Passagem": {"start": "2009-01-01", "end": "2013-06-30", "color": "green"},
     "Barcelona": {"start": "2013-07-01", "end": "2017-08-02", "color": "blue"},
     "Paris SG": {"start": "2017-08-03", "end": "2023-08-14", "color": "red"},
-    "Al-Hilal": {"start": "2023-08-15", "end": "2024-12-31", "color": "purple"}, # Estende até o final de 2024 para mostrar tendência
+    "Al-Hilal": {"start": "2023-08-15", "end": "2024-12-12", "color": "purple"}, # Ajuste o fim para não sobrepor o início do Santos 2
+    "Santos - 2ª Passagem": {"start": "2024-12-13", "end": "2025-12-31", "color": "darkgreen"} # Nova entrada para Santos 2
 }
-# Certifica que as datas de club_periods também são datetime
 for club, period in club_periods.items():
     club_periods[club]["start"] = pd.to_datetime(period["start"])
     club_periods[club]["end"] = pd.to_datetime(period["end"])
@@ -85,7 +86,7 @@ def main():
 
     st.sidebar.header("Filtros e Visualização")
     selected_clubs = st.sidebar.multiselect(
-        "Selecione os Clubes para Comparar:",
+        "Selecione os Clubes para comparar:",
         options=df_market_value['Club'].unique().tolist(),
         default=df_market_value['Club'].unique().tolist()
     )
@@ -97,43 +98,33 @@ def main():
     df_filtered = df_market_value[df_market_value['Club'].isin(selected_clubs)]
 
     st.header("Histórico do Valor de Mercado")
-    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar.")
+    st.markdown("Veja os dados brutos da evolução do valor de mercado do Neymar, acordo com o site especializado Transfermarkt.")
 
     # Adicionar um pequeno debug para inspecionar os dados filtrados
-    st.write("Dados Filtrados para o Gráfico:")
+    st.write("Dados filtrados para o gráfico:")
     st.dataframe(df_filtered) # Mostra o dataframe para debugging
 
     st.markdown("---")
 
-    st.header("Gráfico da Evolução do Valor de Mercado (Teste Simplificado)")
+    st.header("Evolução do Valor de Mercado")
     st.markdown("Acompanhe as mudanças no valor de mercado ao longo do tempo para cada clube.")
-
-    # --- SIMPLIFICANDO O GRÁFICO AO MÁXIMO ---
-    # Removendo todos os temas complexos, legendas, anotações, etc.
-    # Apenas o plot básico.
-
+    
     fig, ax = plt.subplots(figsize=(14, 7))
 
     sns.lineplot(data=df_filtered, x='Date', y='Market_Value_EUR_M', hue='Club', marker='o', ax=ax)
 
     ax.set_title('Evolução do Valor de Mercado de Neymar', fontsize=16)
-    ax.set_xlabel('Data')
+    ax.set_xlabel('Ano')
     ax.set_ylabel('Valor de Mercado (€ Milhões)')
     ax.legend(title='Clube')
-    ax.grid(True)
+    ax.grid(False)
 
-    fig.tight_layout() # Apenas esta chamada, sem rect
+    fig.tight_layout() 
 
     st.pyplot(fig)
 
     st.markdown("---")
-    st.header("Análise dos Valores")
-    st.markdown("""
-    * **Pico de Valor:** Observe quando o valor de mercado atingiu seu ápice e em qual período/clube isso ocorreu.
-    * **Tendências:** Analise as tendências de alta e baixa do valor de mercado ao longo dos anos e como elas se correlacionam com as mudanças de clube.
-    * **Impacto das Transferências:** Identifique se houve um impacto imediato no valor de mercado após grandes transferências (como para o PSG).
-    """)
-
+   
     st.info("""
     **Observação Importante:** Os dados de valor de mercado são **simulados** para fins de demonstração,
     baseados em observações visuais do gráfico do Transfermarkt. Para um projeto real,
