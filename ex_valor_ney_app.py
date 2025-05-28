@@ -165,7 +165,7 @@ def main():
 
     st.markdown("""
     Este aplicativo serve como uma prova de conceito para visualizar a trajetória de valor de um jogador
-    ao longo de sua carreira. Principais funcionalidades e tecnologias utilizadas:
+    ao longo de sua carreira. Principais funcionalidades e tecnologias utilizadas: Python, Pandas, Altair
 
     """)
 
